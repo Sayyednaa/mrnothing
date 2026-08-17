@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react()],
   // Use relative base ('./') so that production builds work seamlessly on:
   // - Local file system preview
-  // - GitHub Pages subpaths (https://USERNAME.github.io/REPOSITORY_NAME/)
+  // - GitHub Pages subpaths (https://sayyednaa.github.io/mrnothing/)
   // - Any static web server without path mismatch
   base: './',
   build: {
