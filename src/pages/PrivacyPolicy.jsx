@@ -1,114 +1,102 @@
 import React from 'react';
-import { ShieldAlert } from 'lucide-react';
-import { SITE_CONFIG } from '../config/site';
+import { ShieldAlert, ShieldCheck, Lock, FileText } from 'lucide-react';
+import { CONTACT_CONFIG, BRAND } from '../data/constants';
 
-export const PrivacyPolicy = () => {
+export default function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-      {/* Page Header */}
-      <div className="border-b border-gray-200 dark:border-navy-muted pb-8">
-        <span className="inline-flex items-center gap-2 px-3.5 py-1 bg-navy-deep/5 dark:bg-white/10 text-navy-deep dark:text-gold-accent text-xs font-extrabold uppercase tracking-widest rounded-full mb-3">
-          Legal Template
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-dark dark:text-white">
-          Privacy Policy (Draft)
-        </h1>
-        <p className="text-xs text-text-secondary dark:text-gray-400 mt-2">
-          Effective Date: August 17, 2026 | Last Updated: August 17, 2026
-        </p>
-      </div>
-
-      {/* Mandatory Legal Review Banner Notice */}
-      <div className="p-4 sm:p-5 bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 dark:border-amber-700/60 rounded-2xl flex items-start gap-4 text-amber-900 dark:text-amber-200 shadow-sm">
-        <ShieldAlert className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-        <div className="space-y-1 text-xs sm:text-sm">
-          <strong className="block text-amber-950 dark:text-amber-100 font-bold uppercase tracking-wider">
-            Important Notice for Visitors & Administrators
-          </strong>
-          <p className="leading-relaxed">
-            {SITE_CONFIG.legalReviewNotice}
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-8 text-gray-800">
+      
+      {/* 1. Legal Review Disclaimer Banner */}
+      <div className="bg-amber-500/10 border-2 border-[#B28A43] p-4 sm:p-6 rounded-2xl flex items-start space-x-4">
+        <ShieldAlert className="w-6 h-6 text-[#B28A43] shrink-0 mt-0.5" />
+        <div className="text-xs sm:text-sm space-y-1">
+          <span className="font-extrabold uppercase tracking-wider text-[#031C44] block">
+            DEMONSTRATION TEMPLATE — REQUIRES LEGAL REVIEW
+          </span>
+          <p className="text-gray-700 leading-relaxed">
+            This document is a showcase privacy policy template created strictly for demonstration purposes for the <strong>{BRAND.name}</strong> storefront. Before deploying commercially, consult a qualified legal professional to adapt these terms to your jurisdiction.
           </p>
         </div>
       </div>
 
-      {/* Structured Legal Content */}
-      <div className="prose prose-slate max-w-none text-sm text-gray-700 dark:text-gray-300 space-y-8 leading-relaxed">
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">1. Overview of Website Purpose</h2>
+      {/* 2. Document Title & Header */}
+      <div className="border-b border-gray-200 pb-6 space-y-2">
+        <div className="inline-flex items-center space-x-2 text-xs font-mono text-[#B28A43] uppercase tracking-wider">
+          <FileText className="w-4 h-4" />
+          <span>Legal Document &bull; Effective Date: January 1, 2026</span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-black font-heading text-[#031C44]">
+          Privacy Policy
+        </h1>
+        <p className="text-sm text-gray-600">
+          How {BRAND.name} handles user interaction, local data storage, and showcase site operations.
+        </p>
+      </div>
+
+      {/* 3. Privacy Content Sections */}
+      <div className="space-y-8 text-sm sm:text-base leading-relaxed text-gray-700">
+        
+        {/* Section 1 */}
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold text-[#031C44] font-heading border-l-4 border-[#B28A43] pl-3">
+            1. Overview & Showcase Notice
+          </h2>
           <p>
-            This website (<strong>Mr.Nothing — Ultimate Action</strong>) is currently hosted as a static product showcase for design presentation and discovery only. No commercial transactions, user account creation, payment processing, or live data collection services are currently operational.
+            This website ({BRAND.name}) operates as a non-commercial, interactive product showcase designed to highlight product aesthetics, technical specifications, and brand philosophy. No commercial transactions, payment card processing, or financial operations take place on this platform.
           </p>
         </section>
 
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">2. Information Collected</h2>
+        {/* Section 2 */}
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold text-[#031C44] font-heading border-l-4 border-[#B28A43] pl-3">
+            2. Data Collection Practices
+          </h2>
           <p>
-            Because this application runs as a static client-side web application without a active database server:
+            We adhere to a strict data minimization protocol. Because this is a static showcase application:
           </p>
-          <ul className="list-disc pl-5 space-y-2 mt-2">
-            <li>
-              <strong>Interactive Forms:</strong> Any information submitted through demo contact or newsletter forms is handled locally in browser state or temporary local storage for demonstration purposes only. It is not transmitted to external database servers.
-            </li>
-            <li>
-              <strong>Local Storage:</strong> Browser local storage may be used to remember client preferences such as your saved Wishlist items or Theme (Dark/Light mode) settings.
-            </li>
+          <ul className="list-disc pl-6 space-y-1 text-sm text-gray-600">
+            <li>We do <strong>NOT</strong> collect credit card details, bank info, or billing addresses.</li>
+            <li>We do <strong>NOT</strong> require account registration or passwords.</li>
+            <li>Optional submission forms (such as newsletter or contact inquiry) collect only the provided name, email address, and message text solely for correspondence.</li>
           </ul>
         </section>
 
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">3. How Information Is Used</h2>
+        {/* Section 3 */}
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold text-[#031C44] font-heading border-l-4 border-[#B28A43] pl-3">
+            3. Local Storage & Cookies
+          </h2>
           <p>
-            Local data (such as wishlist states) is used solely within your browser session to power interactive showcase features. No personal information is sold, rented, or shared with third-party marketers.
+            This website utilizes browser local storage (<code className="font-mono text-xs bg-gray-100 p-1 rounded">localStorage</code>) to save user preferences such as items added to your showcase Wishlist. This data remains entirely stored on your device and is not transmitted to external database servers.
           </p>
         </section>
 
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">4. Cookies & Analytics</h2>
+        {/* Section 4 */}
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold text-[#031C44] font-heading border-l-4 border-[#B28A43] pl-3">
+            4. GitHub Pages & Hosting Infrastructure
+          </h2>
           <p>
-            The current static version of this site does not deploy tracking cookies or aggressive third-party advertising trackers. Standard web hosting logs may automatically record basic technical data (such as IP addresses and browser headers) strictly for hosting security and server diagnostic purposes.
+            This site is hosted on <strong>GitHub Pages</strong>. GitHub may collect technical server access logs including IP addresses, browser user-agent strings, and request timestamps for infrastructure security and bandwidth monitoring. For further details, please review the GitHub Privacy Statement.
           </p>
         </section>
 
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">5. Third-Party Hosting & Services</h2>
+        {/* Section 5 */}
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold text-[#031C44] font-heading border-l-4 border-[#B28A43] pl-3">
+            5. Contact Information
+          </h2>
           <p>
-            This site is hosted on public static infrastructure (e.g., GitHub Pages). Hosting provider network logs are subject to the respective infrastructure provider's global privacy policies.
+            For questions regarding this showcase privacy statement, contact us at:
           </p>
-        </section>
-
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">6. Data Security</h2>
-          <p>
-            We implement standard web safety protocols. However, because no remote data storage is connected, sensitive payment or financial details are never collected or stored.
-          </p>
-        </section>
-
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">7. Children’s Privacy</h2>
-          <p>
-            Our website is directed toward a general audience and does not knowingly collect personal information from children under the age of 16.
-          </p>
-        </section>
-
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">8. Changes to This Policy</h2>
-          <p>
-            We reserve the right to update this template policy as new features or backend integrations are introduced in future releases.
-          </p>
-        </section>
-
-        <section className="bg-white dark:bg-navy-dark p-6 rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm">
-          <h2 className="text-lg font-bold text-navy-dark dark:text-white mb-3">9. Contact & Legal Entity Information</h2>
-          <p>
-            For questions regarding this draft policy or showcase operations, please contact:
-          </p>
-          <div className="mt-3 p-4 bg-surface-offwhite dark:bg-navy-surface rounded-xl border border-gray-200 dark:border-navy-muted text-xs space-y-1">
-            <p><strong>Legal Business Name:</strong> Mr.Nothing Showcase India</p>
-            <p><strong>Registered Address:</strong> [Registered Business Address, India]</p>
-            <p><strong>Email:</strong> {SITE_CONFIG.contact.email}</p>
+          <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl font-mono text-xs text-[#031C44] space-y-1">
+            <div>EMAIL: {CONTACT_CONFIG.email}</div>
+            <div>LOCATION: {CONTACT_CONFIG.location}</div>
           </div>
         </section>
+
       </div>
+
     </div>
   );
-};
+}

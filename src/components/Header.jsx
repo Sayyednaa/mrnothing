@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, ShieldAlert, Sun, Moon, Shield } from 'lucide-react';
-import { SITE_CONFIG } from '../config/site';
-import { useTheme } from '../context/ThemeContext';
-import { useWishlist } from '../context/WishlistContext';
-import { useShowcaseCart } from '../context/ShowcaseCartContext';
-import { WishlistDrawer } from './WishlistDrawer';
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, LayoutGrid, ShieldCheck } from 'lucide-react';
+import { BRAND } from '../data/constants';
+import SearchBar from './SearchBar';
 
-export const Header = () => {
+export default function Header({ 
+  wishlistCount = 0, 
+  onTriggerShowcaseModal 
+}) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [wishlistOpen, setWishlistOpen] = useState(false);
-
-  const { theme, toggleTheme } = useTheme();
-  const { wishlistCount } = useWishlist();
-  const { cartCount, triggerShowcaseModal } = useShowcaseCart();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [headerSearch, setHeaderSearch] = useState('');
+  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -28,275 +24,208 @@ export const Header = () => {
         setIsScrolled(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on page change
   useEffect(() => {
-    setMobileMenuOpen(false);
-    setSearchOpen(false);
+    setIsMobileMenuOpen(false);
+    setIsSearchOpen(false);
   }, [location.pathname]);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchOpen(false);
-      setSearchQuery('');
-    }
-  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Shop', path: '/shop' },
     { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Admin', path: '/admin' },
+    { name: 'Design System', path: '/design-system' },
+    { name: 'Admin', path: '/admin' }
   ];
 
-  const isHomePage = location.pathname === '/';
+  const handleHeaderSearchSubmit = (e) => {
+    e.preventDefault();
+    if (headerSearch.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(headerSearch.trim())}`);
+      setIsSearchOpen(false);
+    }
+  };
 
   return (
-    <>
-      {/* Top Showcase Banner Notice */}
-      <div className="bg-navy-dark text-white text-center py-2 px-4 text-xs font-medium border-b border-navy-muted flex items-center justify-center gap-2">
-        <ShieldAlert className="w-3.5 h-3.5 text-gold-accent shrink-0" />
-        <span>
-          <strong className="text-gold-soft">ULTIMATE STOREFRONT:</strong> Product presentation & management portal. Contact: <a href={`mailto:${SITE_CONFIG.contact.email}`} className="underline hover:text-gold-soft">{SITE_CONFIG.contact.email}</a>
-        </span>
-      </div>
+    <header className={`sticky top-0 z-40 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200/80 py-3' 
+        : 'bg-[#F7F8FA] border-b border-transparent py-4'
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-[#062B67] rounded-lg p-1">
+            <img 
+              src={BRAND.logoPath} 
+              alt={BRAND.logoAlt}
+              className="h-10 w-auto object-contain rounded transition-transform group-hover:scale-105"
+            />
+            <div className="flex flex-col">
+              <span className="font-display font-extrabold text-xl tracking-tight text-[#031C44] group-hover:text-[#062B67] transition-colors">
+                MR.NOTHING
+              </span>
+              <span className="text-[10px] font-bold tracking-widest uppercase text-[#B28A43]">
+                {BRAND.tagline}
+              </span>
+            </div>
+          </Link>
 
-      <header
-        className={`sticky top-0 z-40 transition-all duration-300 ${
-          isScrolled || !isHomePage
-            ? 'bg-white/95 dark:bg-navy-dark/95 backdrop-blur-md shadow-sm border-b border-gray-200/80 dark:border-navy-muted text-navy-dark dark:text-white'
-            : 'bg-navy-dark/90 backdrop-blur-md text-white border-b border-white/10'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Left: Brand Logo */}
-            <Link to="/" className="flex items-center gap-3 group" aria-label="Mr.Nothing homepage">
-              <img
-                src={SITE_CONFIG.logoPath}
-                alt={SITE_CONFIG.logoAlt}
-                className="h-10 w-auto rounded object-contain transition-transform group-hover:scale-105 border border-gold-accent/30"
-              />
-              <div className="hidden sm:flex flex-col">
-                <span className={`font-display font-black text-xl tracking-tight leading-none ${
-                  isScrolled || !isHomePage ? 'text-navy-dark dark:text-white' : 'text-white'
-                }`}>
-                  Mr.Nothing
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`text-sm font-semibold transition-colors duration-200 ${
+                    isActive 
+                      ? 'text-[#062B67] border-b-2 border-[#B28A43] pb-1' 
+                      : 'text-gray-600 hover:text-[#062B67]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Desktop Right Action Bar */}
+          <div className="hidden lg:flex items-center space-x-5">
+            {/* Search Icon Trigger */}
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-gray-600 hover:text-[#062B67] hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Search items"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
+            {/* Wishlist Icon */}
+            <Link
+              to="/shop"
+              className="relative p-2 text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors"
+              aria-label="Wishlist items"
+            >
+              <Heart className="w-5 h-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+                  {wishlistCount}
                 </span>
-                <span className="text-[10px] font-bold tracking-widest text-gold-accent uppercase">
-                  {SITE_CONFIG.tagline}
-                </span>
-              </div>
+              )}
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`text-sm font-semibold transition-colors duration-200 relative py-1 ${
-                      isActive
-                        ? 'text-gold-accent font-bold'
-                        : isScrolled || !isHomePage
-                        ? 'text-gray-700 dark:text-gray-200 hover:text-navy-deep dark:hover:text-gold-accent'
-                        : 'text-gray-200 hover:text-white'
-                    }`}
-                  >
-                    {link.name}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gold-accent rounded-full" />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+            {/* Showcase Bag Button */}
+            <button
+              onClick={() => onTriggerShowcaseModal('Showcase Bag')}
+              className="relative p-2 text-gray-600 hover:text-[#062B67] hover:bg-blue-50 rounded-full transition-colors"
+              aria-label="Showcase Bag"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#B28A43] rounded-full animate-ping" />
+            </button>
 
-            {/* Header Right Actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleTheme}
-                className={`p-2.5 rounded-full transition-colors ${
-                  isScrolled || !isHomePage
-                    ? 'text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10'
-                    : 'text-gray-200 hover:bg-white/10'
-                }`}
-                aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
-                title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5 text-gold-accent" />
-                ) : (
-                  <Moon className="w-5 h-5 text-navy-deep" />
-                )}
-              </button>
+            {/* Primary CTA */}
+            <Link
+              to="/shop"
+              className="py-2.5 px-5 bg-[#062B67] hover:bg-[#031C44] text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+            >
+              <span>Explore Collection</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#D2B36B]" />
+            </Link>
+          </div>
 
-              {/* Search popup */}
-              <div className="relative">
-                <button
-                  onClick={() => setSearchOpen(!searchOpen)}
-                  className={`p-2.5 rounded-full transition-colors ${
-                    isScrolled || !isHomePage
-                      ? 'text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10'
-                      : 'text-gray-200 hover:bg-white/10'
-                  }`}
-                  aria-label="Search items"
-                >
-                  <Search className="w-5 h-5" />
-                </button>
-
-                {searchOpen && (
-                  <form
-                    onSubmit={handleSearchSubmit}
-                    className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white dark:bg-navy-dark rounded-xl shadow-xl border border-gray-200 dark:border-navy-muted p-2 z-50 animate-fade-in"
-                  >
-                    <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-navy-surface rounded-lg">
-                      <Search className="w-4 h-4 text-gray-400 shrink-0" />
-                      <input
-                        type="text"
-                        placeholder="Search products..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-transparent text-sm text-gray-900 dark:text-white focus:outline-none placeholder-gray-400"
-                        autoFocus
-                      />
-                      <button type="submit" className="text-xs font-bold text-navy-deep dark:text-gold-accent hover:underline">
-                        Go
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
-
-              {/* Wishlist Button */}
-              <button
-                onClick={() => setWishlistOpen(true)}
-                className={`relative p-2.5 rounded-full transition-colors ${
-                  isScrolled || !isHomePage
-                    ? 'text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10'
-                    : 'text-gray-200 hover:bg-white/10'
-                }`}
-                aria-label="Open saved wishlist"
-              >
-                <Heart className="w-5 h-5" />
-                {wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 w-5 h-5 bg-gold-accent text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow">
-                    {wishlistCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Showcase Bag Button */}
-              <button
-                onClick={() => triggerShowcaseModal()}
-                className={`relative p-2.5 rounded-full transition-colors ${
-                  isScrolled || !isHomePage
-                    ? 'text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10'
-                    : 'text-gray-200 hover:bg-white/10'
-                }`}
-                aria-label="Showcase bag"
-                title="Showcase Bag"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute top-1 right-1 w-5 h-5 bg-navy-deep text-gold-accent text-[11px] font-bold rounded-full flex items-center justify-center shadow border border-gold-accent/40">
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Primary CTA */}
-              <Link
-                to="/shop"
-                className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-navy-deep hover:bg-navy-dark text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border border-gold-accent/30"
-              >
-                Explore Collection
-                <ArrowRight className="w-4 h-4 text-gold-accent" />
-              </Link>
-
-              {/* Mobile menu hamburger toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden p-2 rounded-lg transition-colors ${
-                  isScrolled || !isHomePage
-                    ? 'text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10'
-                    : 'text-white hover:bg-white/10'
-                }`}
-                aria-label={mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
+          {/* Mobile Right Controls */}
+          <div className="flex lg:hidden items-center space-x-2">
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-gray-800 hover:bg-gray-100 rounded-xl transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Slide-down Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-navy-dark border-t border-navy-muted text-white px-6 py-6 space-y-4 animate-fade-in shadow-2xl">
-            <div className="flex items-center justify-between border-b border-navy-muted pb-4">
-              <div className="flex items-center gap-3">
-                <img src={SITE_CONFIG.logoPath} alt={SITE_CONFIG.logoAlt} className="h-8 w-auto rounded" />
-                <span className="font-display font-bold text-white text-lg">Mr.Nothing</span>
-              </div>
-              <div className="flex items-center gap-2">
+        {/* Expandable Search Drawer */}
+        {isSearchOpen && (
+          <form onSubmit={handleHeaderSearchSubmit} className="mt-4 pt-3 border-t border-gray-200 animate-fadeIn">
+            <SearchBar 
+              searchQuery={headerSearch}
+              setSearchQuery={setHeaderSearch}
+              placeholder="Search products and press enter..."
+            />
+          </form>
+        )}
+      </div>
+
+      {/* Mobile Navigation Drawer */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden bg-black/50 backdrop-blur-sm animate-fadeIn" onClick={() => setIsMobileMenuOpen(false)}>
+          <div 
+            className="absolute top-0 right-0 w-4/5 max-w-sm h-full bg-white shadow-2xl p-6 flex flex-col justify-between"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-gray-100">
+                <div className="flex items-center space-x-2">
+                  <img src={BRAND.logoPath} alt={BRAND.logoAlt} className="h-8 w-auto" />
+                  <span className="font-display font-bold text-lg text-[#031C44]">MR.NOTHING</span>
+                </div>
                 <button
-                  onClick={toggleTheme}
-                  className="p-2 text-gray-300 hover:text-white rounded-lg bg-white/10"
-                  aria-label="Toggle Theme"
-                >
-                  {theme === 'dark' ? <Sun className="w-4 h-4 text-gold-accent" /> : <Moon className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-1 text-gray-400 hover:text-white"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
                   aria-label="Close menu"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
+              <div className="py-6 space-y-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`block px-4 py-3 rounded-xl font-semibold text-sm transition-colors ${
+                      location.pathname === link.path
+                        ? 'bg-blue-50 text-[#062B67]'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
             </div>
 
-            <nav className="flex flex-col space-y-3 pt-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`text-base font-medium py-2 px-3 rounded-lg transition-colors ${
-                    location.pathname === link.path
-                      ? 'bg-navy-deep text-gold-accent font-bold'
-                      : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="pt-4 border-t border-navy-muted flex flex-col gap-3">
+            <div className="pt-6 border-t border-gray-100 space-y-3">
               <Link
                 to="/shop"
-                className="w-full py-3 bg-gold-accent hover:bg-gold-dark text-navy-dark font-bold text-center rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-[#062B67] text-white rounded-xl text-center font-bold text-xs uppercase tracking-wider block"
               >
                 Explore Collection
-                <ArrowRight className="w-4 h-4" />
               </Link>
+              <p className="text-[11px] text-center text-gray-400">
+                Product Showcase Platform
+              </p>
             </div>
           </div>
-        )}
-      </header>
-
-      {/* Wishlist Drawer */}
-      <WishlistDrawer isOpen={wishlistOpen} onClose={() => setWishlistOpen(false)} />
-    </>
+        </div>
+      )}
+    </header>
   );
-};
+}

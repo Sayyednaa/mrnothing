@@ -1,157 +1,131 @@
-# Mr.Nothing — Ultimate Action
+# Mr.Nothing — Ultimate Storefront & Design System
 
-> **Product Showcase & Brand Presentation Platform**
+> **Tagline:** Ultimate Action  
+> **Official Email:** support@mrnothing.in  
+> **Brand Personality:** Bold, Premium, Futuristic, Minimal, Confident, Action-Oriented, Clean and Trustworthy.
 
-Welcome to **Mr.Nothing**, a polished, modern, responsive e-commerce showcase application built around the tagline **“Ultimate Action”**. 
+Welcome to the **Mr.Nothing** official product showcase repository. This application is a high-performance, responsive React + Vite storefront built for product discovery, brand presentation, and design system inspection.
 
----
-
-> ⚠️ **IMPORTANT NOTICE: SHOWCASE ONLY WEBSITE**  
-> This website is engineered strictly for product presentation, layout discovery, and brand identity display. **No real payment SDKs, databases, order processing systems, or checkout backends are connected.** All buttons (such as "Coming Soon", "Showcase Only", or "Notify Me") present interactive demo feedback without collecting sensitive user information or processing transactions.
-
----
-
-## 1. Project Overview
-
-Mr.Nothing is designed for forward-moving individuals who value intentional design, high utility, and minimal clutter. The website presents 16 curated products across four primary categories:
-
-1. **Clothing** (Action Overshirt, Everyday Utility Tee, Motion Cargo Pants, Essential Street Jacket)
-2. **Electronics** (Focus Wireless Headphones, Compact Smart Lamp, Pocket Power Bank, Minimal Bluetooth Speaker)
-3. **Home & Kitchen** (Stoneware Mug Set, Modular Storage Tray, Precision Kitchen Scale, Everyday Pour-Over Set)
-4. **Everyday Essentials** (Daily Carry Organizer, Aluminum Water Bottle, Travel Tech Pouch, Minimal Desk Mat)
-
-### Key Features
-- **Brand Palette:** Deep Navy (`#062B67`), Dark Navy (`#031C44`), Accent Gold (`#B28A43`), Soft Gold (`#D2B36B`).
-- **Interactive Capabilities:** Product search, category filters, price range slider, sorting (Price/Name/Featured), wishlist saving (localStorage persisted), quick view modals, responsive navigation header, and legal policy templates.
-- **GitHub Pages Ready:** HashRouter routing strategy eliminates 404 subpath errors on page refresh.
+> [!IMPORTANT]
+> **Showcase Only Disclaimer:** This site is strictly for product presentation and showcase purposes. It does not process real payments, collect payment information, or create binding purchase orders.
 
 ---
 
-## 2. Local Installation & Development
+## 🚀 Features & Stitch Screens Included
+
+- **Home Page (`/`)**: Hero banner ("Make Every Move Count"), Category Grid, Featured Products, Brand Statement ("Nothing ordinary. Everything intentional."), Trust Cards, and Interactive Demo Newsletter.
+- **Clothing Category Page (`/category/clothing`)**: Dedicated editorial category showcase with category filter controls and grid.
+- **Wireless Earbuds Pro Details Page (`/product/wireless-earbuds-pro` / `/product/focus-wireless-headphones`)**: High-definition image gallery, technical specs table, feature list, sample pricing in **INR (`₹`)**, and showcase buy action modal.
+- **Add Product Admin Form (`/add-product`)**: Interactive form to add new products with live preview card renderer.
+- **Admin Dashboard (`/admin`)**: Metric tiles (Total Showcase Items, Categories, Wishlist counts), product status table, feature toggles, and system controls.
+- **Interactive Design System Showcase (`/design-system`)**: Live visual guide of brand color hexes with click-to-copy, typography specimens, buttons, badges, form inputs, glassmorphism panels, and component previews.
+- **About Us Page (`/about`)**: Brand philosophy, "Ultimate Action" framework, and 3-step vision timeline (Observe, Curate, Move).
+- **Contact Page (`/contact`)**: Form with frontend validation, interactive toast notification, and official contact details (`support@mrnothing.in`).
+- **Legal Draft Templates**: Privacy Policy (`/privacy-policy`) & Terms of Service (`/terms-of-service`) templates.
+
+---
+
+## 🛠️ Local Development & Quickstart
 
 ### Prerequisites
-- Node.js (v18 or higher recommended)
-- npm (v9 or higher)
+- Node.js (v18.0.0 or higher recommended)
+- npm (v9.0.0 or higher)
 
-### Setup Steps
+### Setup & Run
 ```bash
-# Clone repository
+# 1. Clone the repository
 git clone https://github.com/YOUR_USERNAME/mr-nothing.git
 cd mr-nothing
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Start local development server
+# 3. Start local development server
 npm run dev
-```
 
-Open your browser at `http://localhost:5173` to view the application live.
+# 4. Open in browser
+# http://localhost:5173
+```
 
 ### Production Build & Preview
 ```bash
-# Build production bundle to /dist
+# Build static production bundle
 npm run build
 
-# Preview production build locally
+# Preview build locally
 npm run preview
 ```
 
 ---
 
-## 3. How to Add or Replace the Logo
+## 🖼️ How to Add or Replace the Brand Logo
 
-The brand logo is centralized for seamless updates:
-
-1. Place your new image file in `public/assets/` (e.g. `public/assets/mr-nothing-logo.jpg`).
-2. Update the central path in [`src/config/site.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/config/site.js):
-   ```js
-   export const SITE_CONFIG = {
-     name: "Mr.Nothing",
-     tagline: "Ultimate Action",
-     logoPath: "./assets/mr-nothing-logo.jpg", // <--- Update filename here
+1. Place your new logo image in both:
+   - `public/assets/mr-nothing-logo.jpg`
+   - `src/assets/mr-nothing-logo.jpg`
+2. If changing the filename or path, update the central path in [`src/data/constants.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/data/constants.js):
+   ```javascript
+   export const BRAND = {
+     logoPath: "./assets/mr-nothing-logo.jpg",
      logoAlt: "Mr.Nothing — Ultimate Action logo",
      // ...
    };
    ```
+3. The header, mobile menu, footer, about page, and favicon update automatically!
 
 ---
 
-## 4. How to Add or Modify Products
+## 📦 How to Add or Edit Products
 
-All product data lives in a static JSON/JS module at [`src/data/products.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/data/products.js).
+All showcase product data is stored in [`src/data/products.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/data/products.js). To add a product:
 
-To add a new product, append an object following this schema:
-
-```js
+```javascript
 {
   id: "prod-17",
-  slug: "new-action-pack",
-  name: "New Action Pack",
-  category: "Everyday Essentials",
-  categorySlug: "everyday-essentials",
-  price: 95,
-  originalPrice: 120,
-  image: "https://images.unsplash.com/your-image-url",
-  gallery: [
-    "https://images.unsplash.com/your-image-url-1",
-    "https://images.unsplash.com/your-image-url-2"
-  ],
-  shortDescription: "Short one-sentence description.",
-  description: "Detailed multi-paragraph description of the product.",
-  features: ["Feature bullet 1", "Feature bullet 2"],
-  specifications: { "Weight": "350g", "Material": "Cordura 500D" },
+  slug: "custom-product-slug",
+  name: "New Tactical Product",
+  category: "Electronics",
+  categorySlug: "electronics",
+  price: 15999,
+  originalPrice: 18999,
+  image: "https://images.unsplash.com/...",
+  gallery: ["https://images.unsplash.com/..."],
+  shortDescription: "Short summary...",
+  description: "Detailed description...",
+  features: ["Feature 1", "Feature 2"],
+  specifications: { "Weight": "200g", "Battery": "24h" },
   featured: true,
   badge: "New Release",
-  rating: 5.0,
+  rating: 4.9,
   reviewCount: 12,
   isShowcaseOnly: true
 }
 ```
 
+Alternatively, use the **Add Product Form** at `#/add-product` during development!
+
 ---
 
-## 5. How to Change Repository Name & Base Path
+## 🌐 GitHub Pages Deployment & Repository Configuration
 
-In [`vite.config.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/vite.config.js), locate the `repoName` constant:
-
-```js
-const repoName = "YOUR_REPOSITORY_NAME";
+### 1. Update Repository Name (if using project subpath)
+If deploying to `https://USERNAME.github.io/REPOSITORY_NAME/`, set the repository name in [`vite.config.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/vite.config.js):
+```javascript
+export const repoName = "mr-nothing"; // Replace with your repository name
 ```
 
-Replace `"YOUR_REPOSITORY_NAME"` with your actual GitHub repository name (e.g., `"mr-nothing"`). If deploying to a user/organization root site (`https://USERNAME.github.io/`), leave base configured as `'./'`.
+### 2. GitHub Actions Automated Deployment
+This project includes an official GitHub Actions workflow in [`.github/workflows/deploy.yml`](file:///home/sayyednaa/Documents/Mr%20Nothing/.github/workflows/deploy.yml).
+
+- On pushing to the `main` or `master` branch, GitHub Actions will build and deploy the application automatically.
+- **GitHub Repository Settings Required:**
+  1. Go to repository **Settings** -> **Pages**.
+  2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 
 ---
 
-## 6. How to Deploy with GitHub Actions
+## 📧 Support Contact
+- **Official Email:** `support@mrnothing.in`
+- **Location:** India
 
-The repository includes an automated workflow at `.github/workflows/deploy.yml`:
-
-1. Commit your changes and push to the `main` branch.
-2. The GitHub Action will automatically install dependencies, build Vite, and deploy the `/dist` output.
-
----
-
-## 7. Required GitHub Pages Settings
-
-1. On GitHub, navigate to your repository **Settings** -> **Pages**.
-2. Under **Build and deployment**:
-   - **Source**: Select **GitHub Actions**.
-3. Save changes. Pushes to `main` will now deploy automatically.
-
----
-
-## 8. Showcase-Only Disclaimer Note
-
-This project is created explicitly for product discovery, layout showcase, and brand identity presentation. No actual payments, checkout gateways, credit card processing, or user authentication scripts are present.
-
----
-
-## 9. Configuring a Custom Domain (Optional)
-
-To attach a custom domain (e.g. `www.mrnothing.com`):
-
-1. Go to repository **Settings** -> **Pages** -> **Custom domain**.
-2. Enter your domain name and save.
-3. Update your DNS settings at your domain registrar with GitHub Pages A-records (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) or CNAME record.
-4. Enable **Enforce HTTPS** in GitHub Pages settings.
+© 2026 **Mr.Nothing**. All rights reserved. *Ultimate Action.*

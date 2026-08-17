@@ -1,158 +1,125 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Instagram, Twitter, Linkedin, Github, Mail } from 'lucide-react';
-import { SITE_CONFIG } from '../config/site';
-import { CATEGORIES } from '../data/categories';
+import { ShieldCheck, ArrowUpRight, Mail, MapPin, ExternalLink } from 'lucide-react';
+import { BRAND, CONTACT_CONFIG } from '../data/constants';
+import { categories } from '../data/categories';
 
-export const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="bg-navy-dark text-white border-t border-navy-muted mt-auto">
-      {/* Upper Main Footer Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          {/* Brand Info (2 cols wide on desktop) */}
+    <footer className="bg-[#031C44] text-white pt-16 pb-12 border-t border-[#B28A43]/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+          
+          {/* Brand Col */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="inline-flex items-center gap-3">
-              <img
-                src={SITE_CONFIG.logoPath}
-                alt={SITE_CONFIG.logoAlt}
-                className="h-12 w-auto rounded border border-gold-accent/40"
+            <Link to="/" className="flex items-center space-x-3 group">
+              <img 
+                src={BRAND.logoPath} 
+                alt={BRAND.logoAlt}
+                className="h-10 w-auto object-contain rounded bg-white/10 p-1"
               />
-              <div className="flex flex-col">
-                <span className="font-display font-black text-2xl tracking-tight text-white">
-                  Mr.Nothing
+              <div>
+                <span className="font-display font-bold text-2xl tracking-tight text-white">
+                  MR.NOTHING
                 </span>
-                <span className="text-xs font-bold tracking-widest text-gold-accent uppercase">
-                  {SITE_CONFIG.tagline}
+                <span className="block text-[10px] font-extrabold tracking-widest text-[#D2B36B] uppercase">
+                  {BRAND.tagline}
                 </span>
               </div>
             </Link>
-
-            <p className="text-sm text-gray-300 max-w-sm leading-relaxed">
-              A curated lifestyle platform focused on useful, expressive, and action-ready products built for people who move forward.
+            
+            <p className="text-sm text-gray-300 leading-relaxed max-w-md font-light">
+              {BRAND.description} Engineered for focused individuals who move with intention.
             </p>
 
-            <div className="flex items-center gap-2 text-xs text-gold-soft pt-1">
-              <Mail className="w-4 h-4 text-gold-accent" />
-              <a href={`mailto:${SITE_CONFIG.contact.email}`} className="hover:underline font-semibold">
-                {SITE_CONFIG.contact.email}
-              </a>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href={SITE_CONFIG.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-navy-deep hover:bg-gold-accent hover:text-navy-dark rounded-xl transition-all border border-navy-muted"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href={SITE_CONFIG.social.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-navy-deep hover:bg-gold-accent hover:text-navy-dark rounded-xl transition-all border border-navy-muted"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a
-                href={SITE_CONFIG.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-navy-deep hover:bg-gold-accent hover:text-navy-dark rounded-xl transition-all border border-navy-muted"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href={SITE_CONFIG.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-navy-deep hover:bg-gold-accent hover:text-navy-dark rounded-xl transition-all border border-navy-muted"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
+            <div className="flex items-center space-x-4 pt-2 text-xs text-gray-400">
+              <div className="flex items-center space-x-1.5">
+                <MapPin className="w-4 h-4 text-[#B28A43]" />
+                <span>{CONTACT_CONFIG.location}</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Mail className="w-4 h-4 text-[#B28A43]" />
+                <span>{CONTACT_CONFIG.email}</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Navigation Links */}
+          {/* Categories Col */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gold-accent mb-4 font-display">
-              Navigation
-            </h4>
-            <ul className="space-y-2.5 text-sm text-gray-300">
-              <li>
-                <Link to="/" className="hover:text-gold-soft transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link to="/shop" className="hover:text-gold-soft transition-colors">Shop Collection</Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-gold-soft transition-colors">About Mr.Nothing</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-gold-soft transition-colors">Contact Us</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Category Links */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gold-accent mb-4 font-display">
+            <h4 className="font-display text-sm font-bold tracking-wider text-[#D2B36B] uppercase mb-4">
               Categories
             </h4>
             <ul className="space-y-2.5 text-sm text-gray-300">
-              {CATEGORIES.map((cat) => (
+              {categories.map((cat) => (
                 <li key={cat.slug}>
-                  <Link to={`/category/${cat.slug}`} className="hover:text-gold-soft transition-colors flex items-center justify-between">
+                  <Link 
+                    to={`/category/${cat.slug}`}
+                    className="hover:text-white transition-colors hover:underline"
+                  >
                     {cat.name}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link to="/shop" className="text-[#D2B36B] hover:text-white transition-colors flex items-center space-x-1 font-medium">
+                  <span>View All Shop</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Legal & Policy Links */}
+          {/* Navigation / Showcase Col */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gold-accent mb-4 font-display">
-              Policies & Legal
+            <h4 className="font-display text-sm font-bold tracking-wider text-[#D2B36B] uppercase mb-4">
+              Navigation
             </h4>
             <ul className="space-y-2.5 text-sm text-gray-300">
-              <li>
-                <Link to="/privacy-policy" className="hover:text-gold-soft transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms-of-service" className="hover:text-gold-soft transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-gold-soft transition-colors">
-                  Business Inquiry
-                </Link>
-              </li>
+              <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/shop" className="hover:text-white transition-colors">Shop Catalogue</Link></li>
+              <li><Link to="/about" className="hover:text-white transition-colors">About Mr.Nothing</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Support</Link></li>
+              <li><Link to="/design-system" className="hover:text-white transition-colors">Design System Showcase</Link></li>
+              <li><Link to="/admin" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
+              <li><Link to="/add-product" className="hover:text-white transition-colors">Add Showcase Item</Link></li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Bar with Copyright & Showcase Disclaimer */}
-      <div className="bg-navy-dark/95 border-t border-navy-muted/60 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
-          <p>© 2026 Mr.Nothing. All rights reserved. Support: {SITE_CONFIG.contact.email}</p>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-navy-deep/80 rounded-lg border border-gold-accent/20 text-gold-soft">
-            <ShieldCheck className="w-4 h-4 text-gold-accent shrink-0" />
-            <span>This website is currently a product showcase. No purchases are processed.</span>
+          {/* Legal & Compliance Col */}
+          <div>
+            <h4 className="font-display text-sm font-bold tracking-wider text-[#D2B36B] uppercase mb-4">
+              Legal & Policies
+            </h4>
+            <ul className="space-y-2.5 text-sm text-gray-300">
+              <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy (Draft)</Link></li>
+              <li><Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service (Draft)</Link></li>
+            </ul>
+
+            <div className="mt-6 p-3 bg-white/5 rounded-xl border border-white/10">
+              <div className="flex items-center space-x-1.5 text-xs text-[#D2B36B] font-semibold mb-1">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Showcase Disclaimer</span>
+              </div>
+              <p className="text-[11px] text-gray-400 leading-tight">
+                {BRAND.disclaimer}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Copyright & Disclaimer */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+          <p>© {BRAND.copyrightYear} {BRAND.name}. All rights reserved.</p>
+          
+          <div className="flex items-center space-x-6 text-gray-400">
+            <span className="hover:text-white cursor-pointer transition-colors">Instagram</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Twitter / X</span>
+            <span className="hover:text-white cursor-pointer transition-colors">LinkedIn</span>
           </div>
         </div>
       </div>
     </footer>
   );
-};
+}

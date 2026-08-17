@@ -1,12 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// GitHub Pages subpath deployment placeholder:
-// Replace "YOUR_REPOSITORY_NAME" with your actual GitHub repository name if deploying to project site (e.g. https://USERNAME.github.io/REPOSITORY_NAME/)
-const repoName = "YOUR_REPOSITORY_NAME";
+// Repository name for GitHub Pages deployment subpath
+export const repoName = "mrnothing";
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // Automatically fallback to relative base for static hosting compatibility
-  base: process.env.VITE_BASE_PATH || (repoName && repoName !== "YOUR_REPOSITORY_NAME" ? `/${repoName}/` : './'),
+  // Use relative base ('./') so that production builds work seamlessly on:
+  // - Local file system preview
+  // - GitHub Pages subpaths (https://USERNAME.github.io/REPOSITORY_NAME/)
+  // - Any static web server without path mismatch
+  base: './',
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
 });

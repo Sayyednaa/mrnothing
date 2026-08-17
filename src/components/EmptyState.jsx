@@ -1,23 +1,31 @@
 import React from 'react';
-import { SearchX, RefreshCcw } from 'lucide-react';
+import { SearchX, RefreshCw } from 'lucide-react';
 
-export const EmptyState = ({ onClearFilters, title = "No products found", message = "We couldn't find any products matching your current criteria. Try adjusting your search query or clear active filters." }) => {
+export default function EmptyState({ 
+  title = "No products found", 
+  description = "Try adjusting your search criteria, price range, or category filter to discover items.", 
+  onReset 
+}) {
   return (
-    <div className="bg-white dark:bg-navy-dark rounded-2xl border border-gray-100 dark:border-navy-muted p-12 text-center max-w-lg mx-auto shadow-sm my-8">
-      <div className="w-16 h-16 bg-navy-deep/5 dark:bg-white/10 rounded-full flex items-center justify-center text-navy-deep dark:text-gold-accent mx-auto mb-4">
-        <SearchX className="w-8 h-8 stroke-[1.5]" />
+    <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center max-w-md mx-auto my-8 shadow-sm">
+      <div className="w-16 h-16 bg-[#062B67]/10 text-[#062B67] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#B28A43]/20">
+        <SearchX className="w-8 h-8 text-[#B28A43]" />
       </div>
-      <h3 className="text-xl font-bold font-display text-navy-dark dark:text-white mb-2">{title}</h3>
-      <p className="text-sm text-text-secondary dark:text-gray-300 mb-6 leading-relaxed">{message}</p>
-      {onClearFilters && (
+      <h3 className="text-xl font-bold text-[#031C44] font-heading mb-2">
+        {title}
+      </h3>
+      <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+        {description}
+      </p>
+      {onReset && (
         <button
-          onClick={onClearFilters}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-navy-deep dark:bg-gold-accent text-white dark:text-navy-dark text-xs font-semibold rounded-xl transition-colors shadow"
+          onClick={onReset}
+          className="inline-flex items-center space-x-2 bg-[#031C44] hover:bg-[#062B67] text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-md transition-all border border-[#B28A43]/30"
         >
-          <RefreshCcw className="w-3.5 h-3.5" />
-          Reset All Filters
+          <RefreshCw className="w-3.5 h-3.5 text-[#D2B36B]" />
+          <span>Clear All Filters</span>
         </button>
       )}
     </div>
   );
-};
+}

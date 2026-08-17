@@ -1,46 +1,42 @@
-export const CATEGORIES = [
+export const categories = [
   {
-    id: "clothing",
-    slug: "clothing",
+    id: "cat-clothing",
     name: "Clothing",
-    shortDescription: "Action-ready apparel crafted with precision tailoring, weather-resistant textiles, and understated aesthetics.",
-    description: "Designed for modern motion. Our apparel collection fuses minimalist aesthetics with active durability—featuring premium overshirts, utility tees, structured cargo pants, and sleek street jackets built for everyday performance.",
-    heroBanner: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=1600&q=80",
+    slug: "clothing",
+    tagline: "Precision Tailored for Action",
+    description: "Technical fabrics, minimalist cuts, and durable silhouettes crafted for daily movement.",
     image: "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=800&q=80",
-    itemCount: 4,
-    features: ["Weather-resistant textiles", "Ergonomic movement cuts", "Hidden utility pockets", "Tactile matte hardware"]
+    bannerImage: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80",
+    itemCount: 4
   },
   {
-    id: "electronics",
-    slug: "electronics",
+    id: "cat-electronics",
     name: "Electronics",
-    shortDescription: "High-performance acoustics, tactile lighting, and compact power solutions built for focused living.",
-    description: "Minimal design meets maximum capability. Explore wireless acoustic hardware, architectural desk lamps, ultra-dense magnetic power banks, and portable high-fidelity speakers crafted for clarity.",
-    heroBanner: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=80",
+    slug: "electronics",
+    tagline: "Purposeful Innovation",
+    description: "High-performance audio, tactile controls, and sleek power systems engineered for focus.",
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
-    itemCount: 4,
-    features: ["Low-latency audio drivers", "Anodized aluminum chassis", "Fast wireless charging tech", "Intuitive physical controls"]
+    bannerImage: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1600&q=80",
+    itemCount: 4
   },
   {
-    id: "home-kitchen",
-    slug: "home-kitchen",
+    id: "cat-home-kitchen",
     name: "Home & Kitchen",
-    shortDescription: "Modular storage, ergonomic brewing gear, and tactile stoneware designed for elevated daily rituals.",
-    description: "Transform daily rituals into seamless experiences. From matte stoneware ceramic sets to precision digital coffee scales and modular desktop trays, elevate your living environment with purpose.",
-    heroBanner: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80",
+    slug: "home-kitchen",
+    tagline: "Architectural Everyday Living",
+    description: "Minimalist ceramic, precision brewers, and modular organizers designed to declutter.",
     image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80",
-    itemCount: 4,
-    features: ["Food-grade stoneware & glass", "Modular stackable layout", "Precision sensors & calibration", "Heat-resistant silicone accents"]
+    bannerImage: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80",
+    itemCount: 4
   },
   {
-    id: "everyday-essentials",
-    slug: "everyday-essentials",
+    id: "cat-everyday-essentials",
     name: "Everyday Essentials",
-    shortDescription: "Organizers, thermal vessels, and tactile desk mats engineered for seamless daily transitions.",
-    description: "Curated tools for people who act. Keep your daily gear protected, organized, and ready to deploy with our rugged organizers, insulated bottles, tech pouches, and waterproof desk surfaces.",
-    heroBanner: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80",
+    slug: "everyday-essentials",
+    tagline: "Tactical Daily Upgrades",
+    description: "Precision-machined gear, anodized flasks, and desk accessories for optimized workflow.",
     image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
-    itemCount: 4,
-    features: ["Waterproof Cordura fabric", "Vacuum-insulated double walls", "Custom magnetic closures", "Scratch-resistant vegan leather"]
+    bannerImage: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80",
+    itemCount: 4
   }
 ];

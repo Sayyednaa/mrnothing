@@ -1,29 +1,42 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
-export const SectionHeading = ({ badge, title, subtitle, centered = false, action }) => {
+export default function SectionHeading({ 
+  badge, 
+  title, 
+  subtitle, 
+  linkUrl, 
+  linkText = 'View All',
+  centered = false 
+}) {
   return (
-    <div className={`flex flex-col ${centered ? 'items-center text-center' : 'items-start text-left'} justify-between md:flex-row md:items-end gap-4 mb-10`}>
-      <div className="max-w-2xl">
+    <div className={`mb-10 sm:mb-12 ${centered ? 'text-center' : 'flex flex-col sm:flex-row sm:items-end justify-between gap-4'}`}>
+      <div className={centered ? 'max-w-2xl mx-auto' : 'max-w-2xl'}>
         {badge && (
-          <span className="inline-block px-3.5 py-1 bg-navy-deep/5 dark:bg-white/10 text-navy-deep dark:text-gold-accent border border-navy-deep/10 dark:border-white/20 text-xs font-extrabold uppercase tracking-widest rounded-full mb-3">
+          <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#B28A43] bg-[#B28A43]/10 px-3 py-1 rounded-full mb-3 border border-[#B28A43]/20">
             {badge}
           </span>
         )}
-        <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-dark dark:text-white tracking-tight leading-tight">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#031C44] font-heading tracking-tight">
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-3 text-base text-text-secondary dark:text-gray-300 leading-relaxed">
+          <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
             {subtitle}
           </p>
         )}
       </div>
 
-      {action && (
-        <div className="shrink-0 mt-4 md:mt-0">
-          {action}
-        </div>
+      {linkUrl && !centered && (
+        <Link
+          to={linkUrl}
+          className="inline-flex items-center space-x-1.5 text-sm font-semibold text-[#062B67] hover:text-[#B28A43] transition-colors group shrink-0"
+        >
+          <span>{linkText}</span>
+          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+        </Link>
       )}
     </div>
   );
-};
+}

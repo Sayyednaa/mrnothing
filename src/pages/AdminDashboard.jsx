@@ -1,161 +1,295 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, LayoutDashboard, Package, Eye, Heart, Layers, Edit, Trash2, ExternalLink, ShieldCheck, ArrowRight } from 'lucide-react';
-import { PRODUCTS } from '../data/products';
-import { formatPrice } from '../config/site';
-import { SectionHeading } from '../components/SectionHeading';
-import { useToast } from '../context/ToastContext';
+import { 
+  Package, 
+  Layers, 
+  Heart, 
+  ShieldCheck, 
+  PlusCircle, 
+  Search, 
+  Trash2, 
+  Eye, 
+  Star, 
+  SlidersHorizontal,
+  Sparkles,
+  Check,
+  X
+} from 'lucide-react';
+import { products as initialProducts } from '../data/products';
+import { categories } from '../data/categories';
+import { formatPrice } from '../data/constants';
 
-export const AdminDashboard = () => {
-  const [productList, setProductList] = useState(PRODUCTS);
+export default function AdminDashboard() {
+  const [productList, setProductList] = useState(() => {
+    try {
+      const custom = JSON.parse(localStorage.getItem('mr_nothing_custom_products') || '[]');
+      return [...initialProducts, ...custom];
+    } catch {
+      return initialProducts;
+    }
+  });
+
   const [searchTerm, setSearchTerm] = useState('');
-  const { addToast } = useToast();
+  const [categoryFilter, setCategoryFilter] = useState('all');
 
-  const handleDelete = (id, name) => {
-    setProductList((prev) => prev.filter((p) => p.id !== id));
-    addToast(`Removed "${name}" from showcase inventory (Demo action)`, 'info');
+  // Toggle Featured Status locally
+  const toggleFeatured = (id) => {
+    setProductList(prev => prev.map(p => p.id === id ? { ...p, featured: !p.featured } : p));
   };
 
-  const filtered = productList.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Delete product locally
+  const handleDeleteProduct = (id) => {
+    if (window.confirm("Are you sure you want to remove this showcase product entry?")) {
+      setProductList(prev => prev.filter(p => p.id !== id));
+    }
+  };
+
+  // Filtered product table list
+  const filteredProducts = useMemo(() => {
+    return productList.filter(p => {
+      const matchesSearch = searchTerm === '' || 
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.category.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || p.categorySlug === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [productList, searchTerm, categoryFilter]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-      {/* Header & Quick Action */}
-      <SectionHeading
-        badge="Stitch Admin Portal"
-        title="Storefront Dashboard"
-        subtitle="Manage product listings, track showcase interactions, and configure catalogue entries."
-        action={
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10">
+      
+      {/* Dashboard Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#031C44] rounded-3xl p-8 text-white border border-[#B28A43]/30 shadow-2xl relative overflow-hidden">
+        <div className="space-y-2 relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1 rounded-full text-xs text-[#D2B36B] font-semibold">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>STITCH SCREEN #4 &bull; CONTROL PORTAL</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl font-black font-heading text-white">
+            Admin Dashboard
+          </h1>
+
+          <p className="text-xs sm:text-sm text-gray-300">
+            Manage product showcase inventory, feature status, and system metrics.
+          </p>
+        </div>
+
+        <div className="relative z-10 shrink-0">
           <Link
-            to="/admin/add-product"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-navy-deep dark:bg-gold-accent text-white dark:text-navy-dark text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition-all border border-gold-accent/30"
+            to="/add-product"
+            className="inline-flex items-center space-x-2 bg-[#B28A43] hover:bg-[#D2B36B] text-white hover:text-[#031C44] px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-lg border border-white/20"
           >
-            <Plus className="w-4 h-4" />
-            Add New Product
+            <PlusCircle className="w-4 h-4" />
+            <span>Add Showcase Item</span>
           </Link>
-        }
-      />
-
-      {/* Analytics KPI Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="p-6 bg-white dark:bg-navy-dark rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-navy-deep dark:text-gold-accent">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Products</span>
-            <Package className="w-5 h-5" />
-          </div>
-          <p className="text-3xl font-black font-display text-navy-dark dark:text-white">{productList.length}</p>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">100% Showcase Ready</p>
-        </div>
-
-        <div className="p-6 bg-white dark:bg-navy-dark rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-navy-deep dark:text-gold-accent">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Categories</span>
-            <Layers className="w-5 h-5" />
-          </div>
-          <p className="text-3xl font-black font-display text-navy-dark dark:text-white">4</p>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">Clothing, Tech, Home, Gear</p>
-        </div>
-
-        <div className="p-6 bg-white dark:bg-navy-dark rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-navy-deep dark:text-gold-accent">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Showcase Impressions</span>
-            <Eye className="w-5 h-5" />
-          </div>
-          <p className="text-3xl font-black font-display text-navy-dark dark:text-white">14,290</p>
-          <p className="text-[11px] text-emerald-600 font-semibold">+18% this month</p>
-        </div>
-
-        <div className="p-6 bg-white dark:bg-navy-dark rounded-2xl border border-gray-200 dark:border-navy-muted shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-navy-deep dark:text-gold-accent">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Wishlist Saves</span>
-            <Heart className="w-5 h-5" />
-          </div>
-          <p className="text-3xl font-black font-display text-navy-dark dark:text-white">1,840</p>
-          <p className="text-[11px] text-gold-accent font-semibold">High User Intent</p>
         </div>
       </div>
 
-      {/* Inventory Management Table */}
-      <div className="bg-white dark:bg-navy-dark rounded-2xl border border-gray-200 dark:border-navy-muted shadow-md overflow-hidden">
-        <div className="p-6 border-b border-gray-200 dark:border-navy-muted flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h3 className="text-xl font-bold font-display text-navy-dark dark:text-white">
-            Catalogue Inventory ({filtered.length})
-          </h3>
-          <input
-            type="text"
-            placeholder="Search by name or category..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-72 px-4 py-2 bg-surface-offwhite dark:bg-navy-surface border border-gray-200 dark:border-navy-muted rounded-xl text-xs text-navy-dark dark:text-white focus:outline-none placeholder-gray-400"
-          />
+      {/* Metric Cards Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        {/* Metric 1: Total Items */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex items-center justify-between">
+          <div>
+            <span className="text-xs uppercase tracking-wider text-gray-500 font-bold block">
+              Total Showcase Items
+            </span>
+            <span className="text-3xl font-black text-[#031C44] font-mono mt-1 block">
+              {productList.length}
+            </span>
+            <span className="text-[10px] text-emerald-600 font-semibold block mt-1">
+              Active in Storefront
+            </span>
+          </div>
+          <div className="w-12 h-12 bg-[#062B67]/10 text-[#062B67] rounded-xl flex items-center justify-center border border-[#B28A43]/20">
+            <Package className="w-6 h-6 text-[#B28A43]" />
+          </div>
         </div>
 
+        {/* Metric 2: Active Categories */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex items-center justify-between">
+          <div>
+            <span className="text-xs uppercase tracking-wider text-gray-500 font-bold block">
+              Active Categories
+            </span>
+            <span className="text-3xl font-black text-[#031C44] font-mono mt-1 block">
+              {categories.length}
+            </span>
+            <span className="text-[10px] text-gray-500 font-semibold block mt-1">
+              Clothing, Tech, Home, Upgrades
+            </span>
+          </div>
+          <div className="w-12 h-12 bg-[#062B67]/10 text-[#062B67] rounded-xl flex items-center justify-center border border-[#B28A43]/20">
+            <Layers className="w-6 h-6 text-[#B28A43]" />
+          </div>
+        </div>
+
+        {/* Metric 3: Wishlist Activity */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex items-center justify-between">
+          <div>
+            <span className="text-xs uppercase tracking-wider text-gray-500 font-bold block">
+              Wishlist Views
+            </span>
+            <span className="text-3xl font-black text-[#031C44] font-mono mt-1 block">
+              1,420
+            </span>
+            <span className="text-[10px] text-[#B28A43] font-semibold block mt-1">
+              +18% from showcase traffic
+            </span>
+          </div>
+          <div className="w-12 h-12 bg-[#062B67]/10 text-[#062B67] rounded-xl flex items-center justify-center border border-[#B28A43]/20">
+            <Heart className="w-6 h-6 text-rose-500" />
+          </div>
+        </div>
+
+        {/* Metric 4: System Mode Status */}
+        <div className="bg-[#031C44] text-white rounded-2xl border border-[#B28A43]/40 p-6 shadow-md flex items-center justify-between">
+          <div>
+            <span className="text-xs uppercase tracking-wider text-[#D2B36B] font-bold block">
+              System Mode
+            </span>
+            <span className="text-lg font-bold font-heading text-white mt-1 block">
+              Showcase Active
+            </span>
+            <span className="text-[10px] text-emerald-400 font-mono block mt-1 flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Non-Commercial Operations
+            </span>
+          </div>
+          <div className="w-12 h-12 bg-white/10 text-white rounded-xl flex items-center justify-center border border-white/20">
+            <ShieldCheck className="w-6 h-6 text-[#D2B36B]" />
+          </div>
+        </div>
+
+      </div>
+
+      {/* Product Management Section */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden space-y-4">
+        
+        {/* Table Filters Header */}
+        <div className="p-6 border-b border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="relative w-full sm:w-80">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by title or category..."
+              className="w-full bg-gray-50 border border-gray-300 rounded-xl pl-10 pr-4 py-2 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#062B67]"
+            />
+          </div>
+
+          <div className="flex items-center space-x-3 w-full sm:w-auto">
+            <label className="text-xs font-bold text-gray-500 uppercase">Category Filter:</label>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#062B67]"
+            >
+              <option value="all">All Categories</option>
+              {categories.map(c => (
+                <option key={c.id} value={c.slug}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Table Container */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-surface-offwhite dark:bg-navy-surface text-gray-500 dark:text-gray-300 font-bold uppercase tracking-wider border-b border-gray-200 dark:border-navy-muted">
-              <tr>
-                <th className="p-4">Product</th>
-                <th className="p-4">Category</th>
-                <th className="p-4">Sample Price</th>
-                <th className="p-4">Badge</th>
-                <th className="p-4">Rating</th>
-                <th className="p-4 text-right">Actions</th>
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50 text-[11px] font-bold uppercase tracking-wider text-gray-500 border-b border-gray-200">
+                <th className="py-3.5 px-6">Product Item</th>
+                <th className="py-3.5 px-4">Category</th>
+                <th className="py-3.5 px-4">Showcase Price (INR)</th>
+                <th className="py-3.5 px-4">Badge</th>
+                <th className="py-3.5 px-4">Featured</th>
+                <th className="py-3.5 px-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-navy-muted text-gray-700 dark:text-gray-200">
-              {filtered.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-navy-surface/50 transition-colors">
-                  <td className="p-4 flex items-center gap-3">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-12 h-12 object-cover rounded-lg border border-gray-200 dark:border-navy-muted shrink-0"
-                    />
-                    <div>
-                      <span className="font-bold text-navy-dark dark:text-white block">{item.name}</span>
-                      <span className="text-[10px] text-gray-400">ID: {item.id}</span>
+            <tbody className="divide-y divide-gray-100 text-xs sm:text-sm">
+              {filteredProducts.map((prod) => (
+                <tr key={prod.id} className="hover:bg-gray-50/80 transition-colors">
+                  
+                  {/* Thumbnail & Title */}
+                  <td className="py-3.5 px-6">
+                    <div className="flex items-center space-x-3">
+                      <img 
+                        src={prod.image} 
+                        alt={prod.name}
+                        className="w-10 h-10 object-cover rounded-lg border border-gray-200 bg-gray-100 shrink-0"
+                      />
+                      <div>
+                        <span className="font-bold text-[#031C44] block line-clamp-1">
+                          {prod.name}
+                        </span>
+                        <span className="text-[10px] text-gray-400 font-mono">
+                          ID: {prod.id}
+                        </span>
+                      </div>
                     </div>
                   </td>
-                  <td className="p-4 font-semibold text-navy-deep dark:text-gold-accent">{item.category}</td>
-                  <td className="p-4 font-extrabold">{formatPrice(item.price)}</td>
-                  <td className="p-4">
-                    {item.badge ? (
-                      <span className="px-2.5 py-1 bg-navy-deep/10 dark:bg-white/10 text-navy-deep dark:text-gold-soft font-bold rounded-md border border-navy-deep/20 text-[10px]">
-                        {item.badge}
-                      </span>
-                    ) : (
-                      <span className="text-gray-400">-</span>
-                    )}
+
+                  {/* Category */}
+                  <td className="py-3.5 px-4 font-medium text-gray-700">
+                    {prod.category}
                   </td>
-                  <td className="p-4 font-bold text-amber-500">★ {item.rating}</td>
-                  <td className="p-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <Link
-                        to={`/product/${item.slug}`}
-                        className="p-2 text-gray-400 hover:text-navy-deep dark:hover:text-gold-accent rounded-lg hover:bg-gray-100 dark:hover:bg-navy-surface"
-                        title="Preview details"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id, item.name)}
-                        className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30"
-                        title="Delete product"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+
+                  {/* Price in INR */}
+                  <td className="py-3.5 px-4 font-mono font-bold text-[#031C44]">
+                    {formatPrice(prod.price)}
                   </td>
+
+                  {/* Badge */}
+                  <td className="py-3.5 px-4">
+                    <span className="bg-[#031C44] text-white text-[10px] font-bold px-2 py-0.5 rounded border border-[#B28A43]/40">
+                      {prod.badge || 'Showcase'}
+                    </span>
+                  </td>
+
+                  {/* Featured Status Toggle */}
+                  <td className="py-3.5 px-4">
+                    <button
+                      onClick={() => toggleFeatured(prod.id)}
+                      className={`p-1.5 rounded-lg border transition-all flex items-center space-x-1 text-xs font-semibold ${
+                        prod.featured 
+                          ? 'bg-amber-50 text-amber-800 border-amber-300' 
+                          : 'bg-gray-100 text-gray-400 border-gray-200'
+                      }`}
+                    >
+                      <Star className={`w-3.5 h-3.5 ${prod.featured ? 'fill-current text-amber-500' : ''}`} />
+                      <span>{prod.featured ? 'Featured' : 'Standard'}</span>
+                    </button>
+                  </td>
+
+                  {/* Action Buttons */}
+                  <td className="py-3.5 px-6 text-right space-x-2">
+                    <Link
+                      to={`/product/${prod.slug}`}
+                      className="inline-flex items-center p-2 text-gray-600 hover:text-[#062B67] hover:bg-gray-100 rounded-lg transition-colors"
+                      title="View Details"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </Link>
+
+                    <button
+                      onClick={() => handleDeleteProduct(prod.id)}
+                      className="p-2 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                      title="Delete Product"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
+
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
       </div>
+
     </div>
   );
-};
+}
