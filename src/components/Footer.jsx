@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ArrowUpRight, Mail, MapPin, ExternalLink } from 'lucide-react';
+import { ShieldCheck, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 import { BRAND, CONTACT_CONFIG } from '../data/constants';
 import { categories } from '../data/categories';
 
@@ -81,9 +81,6 @@ export default function Footer() {
               <li><Link to="/shop" className="hover:text-white transition-colors">Shop Catalogue</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">About Mr.Nothing</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Support</Link></li>
-              <li><Link to="/design-system" className="hover:text-white transition-colors">Design System Showcase</Link></li>
-              <li><Link to="/admin" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
-              <li><Link to="/add-product" className="hover:text-white transition-colors">Add Showcase Item</Link></li>
             </ul>
           </div>
 

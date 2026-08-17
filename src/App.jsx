@@ -11,9 +11,6 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import AddProduct from './pages/AddProduct';
-import AdminDashboard from './pages/AdminDashboard';
-import DesignSystemPage from './pages/DesignSystemPage';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -29,9 +26,6 @@ export default function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-of-service" element={<TermsOfService />} />
-          <Route path="admin" element={<AdminDashboard />} />
-          <Route path="add-product" element={<AddProduct />} />
-          <Route path="design-system" element={<DesignSystemPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

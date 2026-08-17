@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, LayoutGrid, ShieldCheck } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../data/constants';
 import SearchBar from './SearchBar';
 
@@ -38,9 +38,7 @@ export default function Header({
     { name: 'Home', path: '/' },
     { name: 'Shop', path: '/shop' },
     { name: 'About Us', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'Design System', path: '/design-system' },
-    { name: 'Admin', path: '/admin' }
+    { name: 'Contact', path: '/contact' }
   ];
 
   const handleHeaderSearchSubmit = (e) => {
