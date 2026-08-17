@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-navy-deep: #062B67;
+    --color-navy-dark: #031C44;
+    --color-gold-accent: #B28A43;
+    --color-gold-soft: #D2B36B;
+  }
+
+  html.light body {
+    background-color: #F7F8FA;
+    color: #062B67;
+  }
+
+  html.dark body {
+    background-color: #021330;
+    color: #FFFFFF;
+  }
+}
+
+/* Smooth Theme Transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #031C44;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B28A43;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #B28A43;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D2B36B;
+}
+
+/* Geometric Triangular Angular Motif inspired by brand logo */
+.bg-angular-motif {
+  background-image: 
+    linear-gradient(135deg, rgba(6, 43, 103, 0.08) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(6, 43, 103, 0.08) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(178, 138, 67, 0.08) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(178, 138, 67, 0.08) 25%, transparent 25%);
+  background-position: 20px 0, 20px 0, 0 0, 0 0;
+  background-size: 40px 40px;
+  background-repeat: repeat;
+}
+
+.dark .bg-angular-motif {
+  background-image: 
+    linear-gradient(135deg, rgba(178, 138, 67, 0.08) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(178, 138, 67, 0.08) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(6, 43, 103, 0.15) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(6, 43, 103, 0.15) 25%, transparent 25%);
+}
+
+/* Glassmorphism panel using Logo Deep Navy and Warm Gold accents */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 43, 103, 0.15);
+}
+
+.dark .glass-panel {
+  background: rgba(3, 28, 68, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(178, 138, 67, 0.3);
+}
+
+/* Gold Gradient Text matching Logo Metallic Gold */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #E5C989 0%, #D2B36B 30%, #B28A43 70%, #8C692D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Deep Navy Gradient Text */
+.text-navy-gradient {
+  background: linear-gradient(135deg, #0A3B8C 0%, #062B67 50%, #031C44 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Image Hover Zoom */
+.img-zoom-container {
+  overflow: hidden;
+}
+.img-zoom-container img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom-container:hover img {
+  transform: scale(1.06);
+}
