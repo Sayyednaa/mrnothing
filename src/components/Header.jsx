@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, ShieldAlert, Sun, Moon } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, ShieldAlert, Sun, Moon, Shield } from 'lucide-react';
 import { SITE_CONFIG } from '../config/site';
 import { useTheme } from '../context/ThemeContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -52,6 +52,7 @@ export const Header = () => {
     { name: 'Shop', path: '/shop' },
     { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Admin', path: '/admin' },
   ];
 
   const isHomePage = location.pathname === '/';
@@ -62,7 +63,7 @@ export const Header = () => {
       <div className="bg-navy-dark text-white text-center py-2 px-4 text-xs font-medium border-b border-navy-muted flex items-center justify-center gap-2">
         <ShieldAlert className="w-3.5 h-3.5 text-gold-accent shrink-0" />
         <span>
-          <strong className="text-gold-soft">SHOWCASE STOREFRONT:</strong> Product presentation only. Contact: <a href={`mailto:${SITE_CONFIG.contact.email}`} className="underline hover:text-gold-soft">{SITE_CONFIG.contact.email}</a>
+          <strong className="text-gold-soft">ULTIMATE STOREFRONT:</strong> Product presentation & management portal. Contact: <a href={`mailto:${SITE_CONFIG.contact.email}`} className="underline hover:text-gold-soft">{SITE_CONFIG.contact.email}</a>
         </span>
       </div>
 
@@ -121,7 +122,7 @@ export const Header = () => {
 
             {/* Header Right Actions */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Theme Toggle Button (Dark / Light) */}
+              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 className={`p-2.5 rounded-full transition-colors ${
@@ -139,7 +140,7 @@ export const Header = () => {
                 )}
               </button>
 
-              {/* Search expandable / popup */}
+              {/* Search popup */}
               <div className="relative">
                 <button
                   onClick={() => setSearchOpen(!searchOpen)}

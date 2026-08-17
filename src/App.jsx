@@ -13,6 +13,8 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { AddProduct } from './pages/AddProduct';
 import { NotFound } from './pages/NotFound';
 
 function ScrollToTop() {
@@ -43,6 +45,8 @@ export function App() {
                   <Route path="contact" element={<Contact />} />
                   <Route path="privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="terms-of-service" element={<TermsOfService />} />
+                  <Route path="admin" element={<AdminDashboard />} />
+                  <Route path="admin/add-product" element={<AddProduct />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>

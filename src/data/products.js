@@ -140,6 +140,41 @@ export const PRODUCTS = [
 
   // --- ELECTRONICS ---
   {
+    id: "prod-17",
+    slug: "wireless-earbuds-pro",
+    name: "Wireless Earbuds Pro",
+    category: "Electronics",
+    categorySlug: "electronics",
+    price: 5999,
+    originalPrice: 6999,
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?auto=format&fit=crop&w=800&q=80"
+    ],
+    shortDescription: "Active noise-cancelling true wireless earbuds featuring spatial audio drivers and aluminum wireless charging case.",
+    description: "Immerse yourself in acoustic perfection. Wireless Earbuds Pro pack custom 11mm graphene drivers, hybrid active noise cancellation, transparency audio mode, and IPX5 water resistance inside a sleek matte navy aluminum charging case.",
+    features: [
+      "Adaptive Active Noise Cancellation (ANC)",
+      "Custom 11mm Graphene acoustic drivers",
+      "32-hour total battery life with case",
+      "Triple beamforming microphones per earbud",
+      "Qi-certified wireless charging case"
+    ],
+    specifications: {
+      "Driver Size": "11mm Graphene Dynamic",
+      "Noise Cancellation": "Up to -42dB ANC",
+      "Battery Life": "8h (earbuds) + 24h (charging case)",
+      "Water Resistance": "IPX5 Sweatproof"
+    },
+    featured: true,
+    badge: "Stitch Pro",
+    rating: 4.9,
+    reviewCount: 145,
+    isShowcaseOnly: true
+  },
+  {
     id: "prod-5",
     slug: "focus-wireless-headphones",
     name: "Focus Wireless Headphones",
