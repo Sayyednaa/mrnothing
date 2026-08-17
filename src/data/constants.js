@@ -37,7 +37,7 @@ export const COLORS = {
 
 export const CONTACT_CONFIG = {
   email: "support@mrnothing.in",
-  location: "India",
+  location: "Apj Road, Khadda Colony, Jaitpur, New Delhi, 110044, India",
   supportHours: "Mon - Fri, 9am - 6pm IST",
   socials: {
     instagram: "https://instagram.com",

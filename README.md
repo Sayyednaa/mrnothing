@@ -2,6 +2,7 @@
 
 > **Tagline:** Ultimate Action  
 > **Official Email:** support@mrnothing.in  
+> **Head Office:** Apj Road, Khadda Colony, Jaitpur, New Delhi, 110044, India  
 > **Brand Personality:** Bold, Premium, Futuristic, Minimal, Confident, Action-Oriented, Clean and Trustworthy.
 
 Welcome to the **Mr.Nothing** official product showcase repository. This application is a high-performance, responsive React + Vite storefront built for product discovery, brand presentation, and design system inspection.
@@ -20,7 +21,7 @@ Welcome to the **Mr.Nothing** official product showcase repository. This applica
 - **Admin Dashboard (`/admin`)**: Metric tiles (Total Showcase Items, Categories, Wishlist counts), product status table, feature toggles, and system controls.
 - **Interactive Design System Showcase (`/design-system`)**: Live visual guide of brand color hexes with click-to-copy, typography specimens, buttons, badges, form inputs, glassmorphism panels, and component previews.
 - **About Us Page (`/about`)**: Brand philosophy, "Ultimate Action" framework, and 3-step vision timeline (Observe, Curate, Move).
-- **Contact Page (`/contact`)**: Form with frontend validation, interactive toast notification, and official contact details (`support@mrnothing.in`).
+- **Contact Page (`/contact`)**: Form with frontend validation, interactive toast notification, and official contact details (`support@mrnothing.in`, Head Office: New Delhi, India).
 - **Legal Draft Templates**: Privacy Policy (`/privacy-policy`) & Terms of Service (`/terms-of-service`) templates.
 
 ---
@@ -34,8 +35,8 @@ Welcome to the **Mr.Nothing** official product showcase repository. This applica
 ### Setup & Run
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/mr-nothing.git
-cd mr-nothing
+git clone https://github.com/Sayyednaa/mrnothing.git
+cd mrnothing
 
 # 2. Install dependencies
 npm install
@@ -58,74 +59,8 @@ npm run preview
 
 ---
 
-## 🖼️ How to Add or Replace the Brand Logo
-
-1. Place your new logo image in both:
-   - `public/assets/mr-nothing-logo.jpg`
-   - `src/assets/mr-nothing-logo.jpg`
-2. If changing the filename or path, update the central path in [`src/data/constants.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/data/constants.js):
-   ```javascript
-   export const BRAND = {
-     logoPath: "./assets/mr-nothing-logo.jpg",
-     logoAlt: "Mr.Nothing — Ultimate Action logo",
-     // ...
-   };
-   ```
-3. The header, mobile menu, footer, about page, and favicon update automatically!
-
----
-
-## 📦 How to Add or Edit Products
-
-All showcase product data is stored in [`src/data/products.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/src/data/products.js). To add a product:
-
-```javascript
-{
-  id: "prod-17",
-  slug: "custom-product-slug",
-  name: "New Tactical Product",
-  category: "Electronics",
-  categorySlug: "electronics",
-  price: 15999,
-  originalPrice: 18999,
-  image: "https://images.unsplash.com/...",
-  gallery: ["https://images.unsplash.com/..."],
-  shortDescription: "Short summary...",
-  description: "Detailed description...",
-  features: ["Feature 1", "Feature 2"],
-  specifications: { "Weight": "200g", "Battery": "24h" },
-  featured: true,
-  badge: "New Release",
-  rating: 4.9,
-  reviewCount: 12,
-  isShowcaseOnly: true
-}
-```
-
-Alternatively, use the **Add Product Form** at `#/add-product` during development!
-
----
-
-## 🌐 GitHub Pages Deployment & Repository Configuration
-
-### 1. Update Repository Name (if using project subpath)
-If deploying to `https://USERNAME.github.io/REPOSITORY_NAME/`, set the repository name in [`vite.config.js`](file:///home/sayyednaa/Documents/Mr%20Nothing/vite.config.js):
-```javascript
-export const repoName = "mr-nothing"; // Replace with your repository name
-```
-
-### 2. GitHub Actions Automated Deployment
-This project includes an official GitHub Actions workflow in [`.github/workflows/deploy.yml`](file:///home/sayyednaa/Documents/Mr%20Nothing/.github/workflows/deploy.yml).
-
-- On pushing to the `main` or `master` branch, GitHub Actions will build and deploy the application automatically.
-- **GitHub Repository Settings Required:**
-  1. Go to repository **Settings** -> **Pages**.
-  2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-
----
-
 ## 📧 Support Contact
 - **Official Email:** `support@mrnothing.in`
-- **Location:** India
+- **Head Office:** Apj Road, Khadda Colony, Jaitpur, New Delhi, 110044, India
 
 © 2026 **Mr.Nothing**. All rights reserved. *Ultimate Action.*
